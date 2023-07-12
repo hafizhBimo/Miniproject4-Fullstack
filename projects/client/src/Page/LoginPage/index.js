@@ -11,7 +11,6 @@ export default function LoginPage() {
   const handleSubmit = () => {};
   return (
     <div className=" flex justify-center mt-48">
-      
       <Formik
         initialValues={{
           email: "",
@@ -20,30 +19,39 @@ export default function LoginPage() {
         validationSchema={createSchema}
         onSubmit={handleSubmit}
       >
-        
-        <Form className="flex max-w-md flex-col gap-4 w-96 px-7 py-24 border">
-          <div>
-            <h1 className=" font-bold">Sign in</h1>
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="email1" value="Your email" />
+        {(props) => (
+          <Form className="flex max-w-md flex-col gap-4 w-96 px-7 py-24 border">
+            <div>
+              <h1 className=" font-bold">Sign in</h1>
             </div>
-            <TextInput
-              id="email1"
-              placeholder="name@flowbite.com"
-              required
-              type="email"
-            />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="password1" value="Your password" />
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="email" value="Your email" />
+              </div>
+              <TextInput
+                id="email"
+                placeholder="name@flowbite.com"
+                required
+                type="email"
+                onChange={props.handleChange}
+                value={props.values.email}
+              />
             </div>
-            <TextInput id="password1" required type="password" />
-          </div>
-          <Button type="submit">Submit</Button>
-        </Form>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="password" value="Your password" />
+              </div>
+              <TextInput
+                id="password"
+                required
+                type="password"
+                onChange={props.handleChange}
+                value={props.values.password}
+              />
+            </div>
+            <Button type="submit">Submit</Button>
+          </Form>
+        )}
       </Formik>
     </div>
   );
