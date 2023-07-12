@@ -4,6 +4,7 @@ import { Button, Label, TextInput } from "flowbite-react";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import ConfirmationModal from "../../component/ConfirmationModal";
 
 const EmployeeRegistrationPage = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -95,7 +96,7 @@ const EmployeeRegistrationPage = () => {
               />
             </div>
 
-            <Button type="submit">Submit</Button>
+            <ConfirmationModal />
           </Form>
         )}
       </Formik>
