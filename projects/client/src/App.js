@@ -1,8 +1,9 @@
 import "./App.css";
 import LoginPage from "./Page/LoginPage";
+import EmployeeRegistrationPage from "./Page/EmployeeRegistrationPage";
 
 function App() {
-  return <LoginPage />;
+  return <EmployeeRegistrationPage />;
 }
 
 export default App;

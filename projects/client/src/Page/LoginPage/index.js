@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { Button, Label, TextInput, Checkbox } from "flowbite-react";
+import { Button, Label, TextInput } from "flowbite-react";
 
 export default function LoginPage() {
   const createSchema = Yup.object().shape({
