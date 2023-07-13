@@ -1,7 +1,7 @@
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 
-export default function ConfirmationModal() {
+export default function ConfirmationModalComponent() {
   const [openModal, setOpenModal] = useState(false);
   const props = { openModal, setOpenModal };
 
