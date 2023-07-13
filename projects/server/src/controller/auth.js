@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../models");
 const crypto = require("crypto");
+const secretKey = process.env.JWT_SECRET_KEY;
 
 module.exports = {
   async login(req, res) {
@@ -37,8 +38,8 @@ module.exports = {
       });
     } catch (error) {
       return res.status(500).send({
-        message:"fatal error",
-        error:"error."
+        message: "fatal error",
+        error: error.message,
       });
     }
   },
