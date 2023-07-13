@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import { Button, Label, TextInput } from "flowbite-react";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
+import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
@@ -10,7 +11,19 @@ import rupiah from "../../utils/rupiah";
 const EmployeeRegistrationPage = () => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [joinDate, setJoinDate] = useState(new Date());
-  const handleSubmit = () => {};
+  const token = localStorage.getItem("token");
+  const handleSubmit = (value) => {
+    axios
+      .post("http://localhost:8000/api/registration", value, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className=" flex justify-center mt-8">
       <Formik
