@@ -1,15 +1,17 @@
 import { Sidebar } from "flowbite-react";
 import { HiOutlineClipboard } from "react-icons/hi";
 
-const SidebarComponent = () => {
+const SidebarComponent = ({ roleId }) => {
   return (
     <Sidebar aria-label="Sidebar with content separator example">
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiOutlineClipboard}>
-            <p>Registration form</p>
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
+        {roleId == 1 ? (
+          <Sidebar.ItemGroup>
+            <Sidebar.Item href="/registrationform" icon={HiOutlineClipboard}>
+              <p>Registration form</p>
+            </Sidebar.Item>
+          </Sidebar.ItemGroup>
+        ) : null}
         <Sidebar.ItemGroup />
       </Sidebar.Items>
     </Sidebar>

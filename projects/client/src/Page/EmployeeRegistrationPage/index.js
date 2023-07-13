@@ -5,9 +5,11 @@ import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
+import rupiah from "../../utils/rupiah";
 
 const EmployeeRegistrationPage = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [birthDate, setBirthDate] = useState(new Date());
+  const [joinDate, setJoinDate] = useState(new Date());
   const handleSubmit = () => {
     //ngirim email verification ke email employee, buat ngisi data diri dan password
   };
@@ -20,17 +22,18 @@ const EmployeeRegistrationPage = () => {
           birth_date: "",
           join_date: "",
           email: "",
+          salary: "",
         }}
         onSubmit={handleSubmit}
       >
         {(props) => (
-          <Form className="flex max-w-md flex-col gap-4 w-96 px-7 pt-24 pb-14 border">
+          <Form className="flex max-w-md flex-col gap-4 w-96 px-7 pt-8 pb-14 border">
             <div>
               <h1 className=" font-bold">Employee Registration Form</h1>
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="first_name" value="Your first name" />
+                <Label htmlFor="first_name" value="First name" />
               </div>
               <TextInput
                 id="first_name"
@@ -43,7 +46,7 @@ const EmployeeRegistrationPage = () => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="last_name" value="Your last name" />
+                <Label htmlFor="last_name" value="Last name" />
               </div>
               <TextInput
                 id="last_name"
@@ -56,23 +59,31 @@ const EmployeeRegistrationPage = () => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="birth_date" value="Your birth date" />
+                <Label htmlFor="birth_date" value="Birth date" />
               </div>
               <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-              />
-              <TextInput
                 id="birth_date"
                 required
-                type="text"
-                onChange={props.handleChange}
-                value={props.values.birth_date}
+                selected={birthDate}
+                onChange={(date) => setBirthDate(date)}
+                value={birthDate}
               />
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Your email" />
+                <Label htmlFor="join_date" value="Join date" />
+              </div>
+              <DatePicker
+                id="join_date"
+                required
+                selected={joinDate}
+                onChange={(date) => setJoinDate(date)}
+                value={joinDate}
+              />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="email" value="Email" />
               </div>
               <TextInput
                 id="email"
@@ -85,14 +96,14 @@ const EmployeeRegistrationPage = () => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
+                <Label htmlFor="salary" value="Salary" />
               </div>
               <TextInput
-                id="password"
+                id="salary"
                 required
-                type="password"
+                placeholder={rupiah(6000000)}
                 onChange={props.handleChange}
-                value={props.values.password}
+                value={props.values.salary}
               />
             </div>
 

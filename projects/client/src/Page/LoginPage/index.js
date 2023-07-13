@@ -3,9 +3,11 @@ import { Formik, Form, ErrorMessage, Field } from "formik";
 import { Button, Label, TextInput } from "flowbite-react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const createSchema = Yup.object().shape({
     password: Yup.string()
       .min(6, "Password must be 6 characters at minimum")
@@ -17,6 +19,7 @@ export default function LoginPage() {
       .then((response) => {
         localStorage.setItem("token", response.data.loginToken);
         setErrorMessage("");
+        navigate("/dashboard");
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);

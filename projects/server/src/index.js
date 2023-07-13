@@ -16,6 +16,7 @@ app.use(express.json());
 // NOTE : Add your routes here
 
 app.use("/api/auth", routes.auth);
+app.use("/api", routes.registration);
 
 // ===========================
 
