@@ -4,7 +4,7 @@ import EmployeeRegistrationPage from "./Page/EmployeeRegistrationPage";
 import DashboardPage from "./Page/DashboardPage";
 
 function App() {
-  return <DashboardPage />;
+  return <LoginPage />;
 }
 
 export default App;
