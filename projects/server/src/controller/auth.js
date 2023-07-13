@@ -43,4 +43,31 @@ module.exports = {
       });
     }
   },
+  async keepLogin(req, res) {
+    const userId = req.user.id;
+    const userRole = req.user.role_id;
+
+    try {
+      const user = await db.User.findOne({
+        where: { id: userId },
+      });
+      if (!user) {
+        return res.status(400).send({
+          message: "user not found",
+        });
+      }
+      res.status(200).send({
+        message: "login data successfully collected",
+        data: {
+          email: user.email,
+          role_id: userRole,
+        },
+      });
+    } catch (error) {
+      return res.status(500).send({
+        message: "fatal error",
+        error: error.message,
+      });
+    }
+  },
 };
