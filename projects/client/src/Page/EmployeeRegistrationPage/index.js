@@ -10,9 +10,7 @@ import rupiah from "../../utils/rupiah";
 const EmployeeRegistrationPage = () => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [joinDate, setJoinDate] = useState(new Date());
-  const handleSubmit = () => {
-    //ngirim email verification ke email employee, buat ngisi data diri dan password
-  };
+  const handleSubmit = () => {};
   return (
     <div className=" flex justify-center mt-8">
       <Formik
