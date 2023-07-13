@@ -1,3 +1,4 @@
+import NavbarComponent from "../../component/NavbarComponent";
 import SidebarComponent from "../../component/SidebarComponent";
 
 const DashboardPage = () => {
@@ -7,7 +8,8 @@ const DashboardPage = () => {
         <SidebarComponent />
       </div>
       <div className="cols-span-2">
-        ini grid 2
+        <NavbarComponent />
+        <p>halo admin</p>
       </div>
     </div>
   );
