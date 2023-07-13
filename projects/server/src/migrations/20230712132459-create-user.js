@@ -23,9 +23,7 @@ module.exports = {
       role_id: {
         type: Sequelize.INTEGER,
       },
-      exp_access_token: {
-        type: Sequelize.DATE,
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
