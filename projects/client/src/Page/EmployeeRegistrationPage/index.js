@@ -144,8 +144,7 @@ const EmployeeRegistrationPage = () => {
                 value={props.values.basic_salary}
               />
             </div>
-
-            <ConfirmationModalComponent />
+            <Button type="submit">submit</Button>
           </Form>
         )}
       </Formik>

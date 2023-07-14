@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const db = require("../models");
 const crypto = require("crypto");
 const secretKey = process.env.JWT_SECRET_KEY;
+const fs = require("fs");
+const handlebars = require("handlebars");
+const transporter = require("../helper/transporter");
 
 module.exports = {
   async employeeRegistration(req, res) {
@@ -51,6 +54,21 @@ module.exports = {
         join_date,
         user_id: userId,
         salary_id: salaryId,
+      });
+      // render template email
+      const link = `${process.env.FE_BASEPATH}verify/${accessToken}`;
+      const data = fs.readFileSync(
+        `${__dirname}/../templateEmail/email.html`,
+        "utf-8"
+      );
+      const tempCompile = handlebars.compile(data);
+      const tempResult = tempCompile({ first_name, link });
+
+      await transporter.sendMail({
+        from: "meToYou",
+        to: email,
+        subject: "thankyou for registering",
+        html: tempResult,
       });
       res.status(200).send({
         message: "new employee successfully created",
