@@ -88,4 +88,30 @@ module.exports = {
       });
     }
   },
+  async employeeVerification(req, res) {
+    const { accessToken } = req.params;
+    const { first_name, last_name, birth_date, join_date, password } = req.body;
+    try {
+      //check accessToken
+      const userData = await db.User.findOne({
+        where: { access_token: accessToken },
+      });
+      if (!userData) {
+        return res.status(404).send("invalid token");
+      }
+
+      //check employee_details
+      const employeeData = await db.Employee_details.findOne({
+        where: { user_id: userData.id },
+      });
+
+      //hash password
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(password, salt);
+
+      //patch password
+    } catch (error) {
+      return;
+    }
+  },
 };
