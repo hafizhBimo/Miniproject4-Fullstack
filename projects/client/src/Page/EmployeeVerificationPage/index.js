@@ -3,14 +3,14 @@ import { Button, Label, TextInput } from "flowbite-react";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
-import { employeeVerification } from "../../../../server/src/controller/registration";
 
 const EmployeeVerificationPage = () => {
-  const { accessToken } = req.params;
+  const {accessToken} = useParams();
   const [birthDate, setBirthDate] = useState(new Date());
   //BIKIN API UNTUK GET EMPLOYEE DATA BUAT MASUKIN KE VALUE
   const formattedDate = (data) => {

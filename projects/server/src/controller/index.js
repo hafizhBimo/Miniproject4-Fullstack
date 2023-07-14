@@ -1,7 +1,7 @@
 const auth = require("./auth");
-const registration = require("./registration");
+const employee = require("./employee");
 
 module.exports = {
   auth,
-  registration
+  employee,
 };
