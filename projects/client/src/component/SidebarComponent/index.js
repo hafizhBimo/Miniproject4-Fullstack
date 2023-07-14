@@ -1,9 +1,11 @@
 import { Sidebar } from "flowbite-react";
 import { HiOutlineClipboard } from "react-icons/hi";
+import "./style.css"
+
 
 const SidebarComponent = ({ roleId }) => {
   return (
-    <Sidebar aria-label="Sidebar with content separator example">
+    <Sidebar className="blabla" aria-label="Sidebar with content separator example">
       <Sidebar.Items>
         {roleId == 1 ? (
           <Sidebar.ItemGroup>

@@ -4,6 +4,7 @@ import { Button, Label, TextInput } from "flowbite-react";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import axios from "axios";
+
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
@@ -11,21 +12,45 @@ import rupiah from "../../utils/rupiah";
 const EmployeeRegistrationPage = () => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [joinDate, setJoinDate] = useState(new Date());
+
   const token = localStorage.getItem("token");
+
+  const formattedDate = (data) => {
+    return `${data.getMonth() + 1}/${data.getDate()}/${data.getFullYear()}`;
+  };
+  const handleChange = (value, type) => {
+    if (type == "birth") {
+      setBirthDate(value);
+    } else {
+      setJoinDate(value);
+    }
+  };
   const handleSubmit = (value) => {
+    let data = {
+      ...value,
+      birth_date: formattedDate(birthDate),
+      join_date: formattedDate(joinDate),
+    };
+
+    console.log(value, "ini value");
     axios
-      .post("http://localhost:8000/api/registration", value, {
+      .post("http://localhost:8000/api/registration", data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         console.log(response);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error, "ini error");
+        console.log(
+          formattedDate(joinDate),
+          formattedDate(birthDate),
+          "ini tanggal"
+        );
       });
   };
   return (
-    <div className=" flex justify-center mt-8">
+    <div className=" flex justify-center mt-8 bg-slate-100">
       <Formik
         initialValues={{
           first_name: "",
@@ -33,12 +58,12 @@ const EmployeeRegistrationPage = () => {
           birth_date: "",
           join_date: "",
           email: "",
-          salary: "",
+          basic_salary: "",
         }}
         onSubmit={handleSubmit}
       >
         {(props) => (
-          <Form className="flex max-w-md flex-col gap-4 w-96 px-7 pt-8 pb-14 border">
+          <Form className="flex max-w-md flex-col gap-4 w-96 px-7 pt-8 pb-14 bg-white">
             <div>
               <h1 className=" font-bold">Employee Registration Form</h1>
             </div>
@@ -73,10 +98,11 @@ const EmployeeRegistrationPage = () => {
                 <Label htmlFor="birth_date" value="Birth date" />
               </div>
               <DatePicker
+                dateFormat="yyyy/MM/dd"
                 id="birth_date"
                 required
                 selected={birthDate}
-                onChange={(date) => setBirthDate(date)}
+                onChange={(date) => handleChange(date, "birth")}
                 value={birthDate}
               />
             </div>
@@ -85,10 +111,11 @@ const EmployeeRegistrationPage = () => {
                 <Label htmlFor="join_date" value="Join date" />
               </div>
               <DatePicker
+                dateFormat="yyyy/MM/dd"
                 id="join_date"
                 required
                 selected={joinDate}
-                onChange={(date) => setJoinDate(date)}
+                onChange={(date) => handleChange(date, "join")}
                 value={joinDate}
               />
             </div>
@@ -107,14 +134,14 @@ const EmployeeRegistrationPage = () => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="salary" value="Salary" />
+                <Label htmlFor="basic_salary" value="Basic salary" />
               </div>
               <TextInput
-                id="salary"
+                id="basic_salary"
                 required
                 placeholder={rupiah(6000000)}
                 onChange={props.handleChange}
-                value={props.values.salary}
+                value={props.values.basic_salary}
               />
             </div>
 
