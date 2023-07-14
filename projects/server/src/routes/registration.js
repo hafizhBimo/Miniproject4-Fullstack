@@ -9,4 +9,9 @@ router.post(
   registrationController.employeeRegistration
 );
 
+router.patch(
+  "/verification/:accessToken",
+  registrationController.employeeVerification
+);
+
 module.exports = router;

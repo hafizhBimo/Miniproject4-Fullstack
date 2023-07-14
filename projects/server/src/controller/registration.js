@@ -109,9 +109,45 @@ module.exports = {
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
 
-      //patch password
+      //patch data
+      if (first_name) {
+        employeeData.first_name = first_name;
+      }
+      if (last_name) {
+        employeeData.last_name = last_name;
+      }
+      if (birth_date) {
+        employeeData.birth_date = birth_date;
+      }
+      if (join_date) {
+        employeeData.join_date = join_date;
+      }
+      if (password) {
+        userData.password = hashPassword;
+      }
+      
+      //delete access token
+      userData.access_token = null;
+
+      //save data
+      await userData.save();
+      await employeeData.save();
+
+      res.status(200).send({
+        message: "verification success",
+        data: {
+          first_name: employeeData.first_name,
+          last_name: employeeData.last_name,
+          birth_date: employeeData.birth_date,
+          join_date: employeeData.join_date,
+          email: userData.email,
+        },
+      });
     } catch (error) {
-      return;
+      return res.status(500).send({
+        message: "fatal error",
+        error: error.message,
+      });
     }
   },
 };

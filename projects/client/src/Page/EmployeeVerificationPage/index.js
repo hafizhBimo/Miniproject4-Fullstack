@@ -7,39 +7,32 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
+import { employeeVerification } from "../../../../server/src/controller/registration";
 
-const EmployeeRegistrationPage = () => {
+const EmployeeVerificationPage = () => {
+  const { accessToken } = req.params;
   const [birthDate, setBirthDate] = useState(new Date());
-  const [joinDate, setJoinDate] = useState(new Date());
-
-  const token = localStorage.getItem("token");
-
+  //BIKIN API UNTUK GET EMPLOYEE DATA BUAT MASUKIN KE VALUE
   const formattedDate = (data) => {
     return `${data.getMonth() + 1}/${data.getDate()}/${data.getFullYear()}`;
   };
   const handleChange = (value, type) => {
     if (type == "birth") {
       setBirthDate(value);
-    } else {
-      setJoinDate(value);
     }
   };
   const handleSubmit = (value) => {
     let data = {
       ...value,
       birth_date: formattedDate(birthDate),
-      join_date: formattedDate(joinDate),
     };
     axios
-      .post("http://localhost:8000/api/registration", data, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .patch(`http://localhost:8000/api/verification/${accessToken}`, data)
       .then((response) => {
         console.log(response);
       })
       .catch((error) => {
         console.log(error, "ini error");
-
       });
   };
   return (
@@ -49,16 +42,14 @@ const EmployeeRegistrationPage = () => {
           first_name: "",
           last_name: "",
           birth_date: "",
-          join_date: "",
-          email: "",
-          basic_salary: "",
+          password: "",
         }}
         onSubmit={handleSubmit}
       >
         {(props) => (
           <Form className="flex max-w-md flex-col gap-4 w-96 px-7 pt-8 pb-14 bg-white">
             <div>
-              <h1 className=" font-bold">Employee Registration Form</h1>
+              <h1 className=" font-bold">Employee Verification Form</h1>
             </div>
             <div>
               <div className="mb-2 block">
@@ -101,19 +92,6 @@ const EmployeeRegistrationPage = () => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="join_date" value="Join date" />
-              </div>
-              <DatePicker
-                dateFormat="yyyy/MM/dd"
-                id="join_date"
-                required
-                selected={joinDate}
-                onChange={(date) => handleChange(date, "join")}
-                value={joinDate}
-              />
-            </div>
-            <div>
-              <div className="mb-2 block">
                 <Label htmlFor="email" value="Email" />
               </div>
               <TextInput
@@ -121,20 +99,19 @@ const EmployeeRegistrationPage = () => {
                 placeholder="name@flowbite.com"
                 required
                 type="email"
-                onChange={props.handleChange}
                 value={props.values.email}
               />
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="basic_salary" value="Basic salary" />
+                <Label htmlFor="password" value="password" />
               </div>
               <TextInput
-                id="basic_salary"
+                id="password"
                 required
                 placeholder={rupiah(6000000)}
                 onChange={props.handleChange}
-                value={props.values.basic_salary}
+                value={props.values.password}
               />
             </div>
             <Button type="submit">submit</Button>
@@ -145,4 +122,4 @@ const EmployeeRegistrationPage = () => {
   );
 };
 
-export default EmployeeRegistrationPage;
+export default EmployeeVerificationPage;
