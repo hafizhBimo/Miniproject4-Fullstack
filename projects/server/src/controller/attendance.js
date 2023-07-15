@@ -143,10 +143,21 @@ module.exports = {
   },
   async employeeAttendanceReport(req, res) {
     const userId = req.user.id;
+    const pagination = {
+      page: Number(req.query.page) || 1,
+      perPage: Number(req.query.perPage) || 7,
+      date: req.query.date || undefined,
+    };
     try {
+      let where = { user_id: userId };
+
+      if (pagination.date) {
+        where.date = pagination.date;
+      }
+
       //get attendance data
-      const attendaceData = await db.Attendance.findAll({
-        where: { user_id: userId },
+      const { count, rows } = await db.Attendance.findAndCountAll({
+        where,
         attributes: { exclude: ["createdAt", "updatedAt", "isValid"] },
         include: [
           {
@@ -154,14 +165,33 @@ module.exports = {
             attributes: ["email"],
             include: {
               model: db.Employee_details,
-              attributes: ["first_name", "last_name","join_date"],
+              attributes: ["first_name", "last_name", "join_date"],
             },
           },
         ],
+        limit: pagination.perPage,
+        offset: (pagination.page - 1) * pagination.perPage,
       });
+
+      if (pagination.search && count === 0) {
+        return res.status(404).send({
+          message: "No products found matching the search query.",
+        });
+      }
+
+      const totalPages = Math.ceil(count / pagination.perPage);
+      console.log(count, totalPages);
+
       res.status(200).send({
         message: "data successfully retrieved",
-        data: attendaceData,
+
+        pagination: {
+          page: pagination.page,
+          perPage: pagination.perPage,
+          totalPages: totalPages,
+          totalData: count,
+        },
+        data: rows,
       });
     } catch (error) {
       return;

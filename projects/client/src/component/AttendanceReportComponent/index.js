@@ -18,16 +18,13 @@ const AttendanceReportComponent = () => {
       });
   }, []);
   return (
-    <div
-      style={{ height: "94vh" }}
-      className="flex justify-center items-center bg-slate-100"
-    >
+    <div className="flex justify-center items-center bg-slate-100">
       <div
         style={{
           width: "1000px",
           alignItems: "center",
           backgroundColor: "white",
-          height: "94vh",
+          height: "auto",
           display: "flex",
           flexDirection: "column",
         }}
@@ -35,7 +32,7 @@ const AttendanceReportComponent = () => {
         <Card horizontal className="my-10">
           <div className="flex">
             <div>
-                <img src={avatar} style={{width:"130px"}}/>
+              <img src={avatar} style={{ width: "130px" }} />
             </div>
             <div className="p-8">
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
