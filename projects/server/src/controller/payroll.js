@@ -6,6 +6,37 @@ module.exports = {
     const year = req.params.year;
     const month = req.params.month;
     try {
+      //format date
+      const date = new Date();
+      const timeNow = date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+      const dateNow = date
+        .toLocaleDateString("zh-Hans-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .replace(/\//g, "-");
+
+      const dates = new Date(dateNow);
+
+      //check double payroll
+      const checkPayroll = await db.Payroll.findOne({
+        where: {
+          [db.Sequelize.Op.and]: [{ user_id: userId }, { date: dates }],
+        },
+      });
+      if (checkPayroll) {
+        return res.status(400).send({
+          message: "you've already generate payroll for this user",
+          data: checkPayroll,
+        });
+      }
+      console.log(dates);
+      //get data from attendances
       const payrollData = await db.Attendance.findAll({
         where: {
           [db.Sequelize.Op.and]: [
@@ -21,7 +52,7 @@ module.exports = {
           ],
         },
       });
-
+      // find user
       const salaryDetail = await db.Employee_details.findOne({
         where: { user_id: userId },
         include: [
@@ -38,6 +69,7 @@ module.exports = {
         });
       }
 
+      //counting salaries
       const basicSalary = salaryDetail.Salary.basic_salary;
       const dailySalary = basicSalary / 21;
 
@@ -55,7 +87,16 @@ module.exports = {
       const totalDeduction = halfCount * (dailySalary / 2);
       const fullSalary = fullCount * dailySalary + totalDeduction;
 
-      console.log(year, month, "in alelael");
+      //save to db
+      await db.Payroll.create({
+        user_id: userId,
+        date: dates,
+        total_deduction: totalDeduction,
+        total_payroll: fullSalary,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
       res.status(200).send({
         employeeDetail: salaryDetail,
         totalSalary: fullSalary,
@@ -63,7 +104,7 @@ module.exports = {
       });
     } catch (error) {
       return res.status(500).send({
-        message: "aleael",
+        message: "fatal error",
         error: error.message,
       });
     }
