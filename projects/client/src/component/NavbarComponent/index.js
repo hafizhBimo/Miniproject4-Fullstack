@@ -2,13 +2,20 @@ import { useState } from "react";
 import { Dropdown, Navbar } from "flowbite-react";
 import EmployeeRegistrationPage from "../../Page/EmployeeRegistrationPage";
 import WelcomeMenuComponent from "../WelcomeMenuComponent";
-import "./style.css"
+import "./style.css";
+import AttendanceComponent from "../AttendanceComponent";
 
 export default function NavbarComponent({ roleId, setMenu, user }) {
   const token = localStorage.getItem("token");
   const [activeNav, setActiveNav] = useState({
     home: false,
     registration: false,
+  });
+  const [activeNavEmp, setActiveNavEmp] = useState({
+    home: false,
+    attendance: false,
+    attendanceReport: false,
+    payrollReport: false,
   });
   return (
     <Navbar fluid rounded>
@@ -46,10 +53,26 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
         </Navbar.Collapse>
       ) : (
         <Navbar.Collapse>
-          <Navbar.Link active href="#">
+          <Navbar.Link
+            className="hover"
+            active={activeNavEmp.home}
+            onClick={() => {
+              setMenu(<WelcomeMenuComponent user={user} />);
+              setActiveNavEmp({ home: true });
+            }}
+          >
             <p>Home</p>
           </Navbar.Link>
-          <Navbar.Link href="#">attendance</Navbar.Link>
+          <Navbar.Link
+            className="hover"
+            active={activeNavEmp.attendance}
+            onClick={() => {
+              setMenu(<AttendanceComponent user={user} />);
+              setActiveNavEmp({ attendance: true });
+            }}
+          >
+            attendance
+          </Navbar.Link>
           <Navbar.Link href="#">attendance report</Navbar.Link>
           <Navbar.Link href="#">payroll report</Navbar.Link>
           <Navbar.Link href="#">Logout</Navbar.Link>
