@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Card } from "flowbite-react";
+import { Table, Card, Pagination } from "flowbite-react";
 import "boxicons";
 import avatar from "../../asset/pngegg.png";
 
 const AttendanceReportComponent = () => {
   const token = localStorage.getItem("token");
   const [attendanceData, setAttendanceData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/attendancereport", {
+      .get(`http://localhost:8000/api/attendancereport?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         setAttendanceData(response.data.data);
-        console.log(response.data.data);
+        setTotalPage(response.data.pagination.totalPages);
+        console.log(response.data);
       });
-  }, []);
+  }, [currentPage]);
   return (
     <div className="flex justify-center items-center bg-slate-100">
       <div
@@ -25,6 +30,7 @@ const AttendanceReportComponent = () => {
           alignItems: "center",
           backgroundColor: "white",
           height: "auto",
+          minHeight: "94vh",
           display: "flex",
           flexDirection: "column",
         }}
@@ -76,6 +82,11 @@ const AttendanceReportComponent = () => {
             })}
           </Table.Body>
         </Table>
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+          totalPages={totalPage}
+        />
       </div>
     </div>
   );
