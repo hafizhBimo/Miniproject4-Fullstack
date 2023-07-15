@@ -118,6 +118,17 @@ module.exports = {
       //get attendance data
       const attendaceData = await db.Attendance.findAll({
         where: { user_id: userId },
+        attributes: { exclude: ["createdAt", "updatedAt", "isValid"] },
+        include: [
+          {
+            model: db.User,
+            attributes: ["email"],
+            include: {
+              model: db.Employee_details,
+              attributes: ["first_name", "last_name"],
+            },
+          },
+        ],
       });
       res.status(200).send({
         message: "data successfully retrieved",
