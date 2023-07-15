@@ -24,15 +24,17 @@ module.exports = {
 
       const salaryDetail = await db.Employee_details.findOne({
         where: { user_id: userId },
-        include: {
-          model: db.Salary,
-          atttributes: ["salary"],
-        },
+        include: [
+          {
+            model: db.Salary,
+            atttributes: ["basic_salary"],
+          },
+        ],
       });
 
       if (!salaryDetail) {
-        return res.status(400).send({
-          message: "tidak ada gajian",
+        return res.status(404).send({
+          message: "user not found",
         });
       }
 
@@ -66,6 +68,29 @@ module.exports = {
       });
     }
   },
-};
+  async getPayrollData(req, res) {
+    const userId = req.user.id;
+    try {
+      const payrollData = await db.Employee_details.findAll({
+        where: { user_id: userId },
+        atttributes: { exclude: ["createdAt", "updatedAt", "user_id"] },
+        include: [
+          {
+            model: db.Salary,
+            atttributes: ["basic_salary"],
+          },
+        ],
+      });
 
-// [sequelize.fn("MONTH", sequelize.col("date"))]: 7,
+      res.status(200).send({
+        message: "payroll data successfully retreived",
+        data: payrollData,
+      });
+    } catch (error) {
+      return res.status(500).send({
+        message: "fatal error",
+        error: error.message,
+      });
+    }
+  },
+};
