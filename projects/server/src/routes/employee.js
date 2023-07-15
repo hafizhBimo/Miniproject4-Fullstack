@@ -14,4 +14,6 @@ router.patch(
   employeeController.employeeVerification
 );
 
+router.get("/employee/:accessToken", employeeController.employeeData);
+
 module.exports = router;

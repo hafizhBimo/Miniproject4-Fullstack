@@ -125,7 +125,7 @@ module.exports = {
       if (password) {
         userData.password = hashPassword;
       }
-      
+
       //delete access token
       userData.access_token = null;
 
@@ -142,6 +142,32 @@ module.exports = {
           join_date: employeeData.join_date,
           email: userData.email,
         },
+      });
+    } catch (error) {
+      return res.status(500).send({
+        message: "fatal error",
+        error: error.message,
+      });
+    }
+  },
+  async employeeData(req, res) {
+    const { accessToken } = req.params;
+    try {
+      //check accessToken
+      const userData = await db.User.findOne({
+        where: { access_token: accessToken },
+      });
+      if (!userData) {
+        return res.status(404).send("invalid token");
+      }
+      //get employee data
+      const employeeData = await db.Employee_details.findOne({
+        where: { user_id: userData.id },
+      });
+
+      res.status(200).send({
+        message: "employee data successfully retrieved",
+        data: employeeData,
       });
     } catch (error) {
       return res.status(500).send({

@@ -1,18 +1,28 @@
 import { Formik, Form } from "formik";
 import { Button, Label, TextInput } from "flowbite-react";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
 
 const EmployeeVerificationPage = () => {
-  const {accessToken} = useParams();
+  const { accessToken } = useParams();
   const [birthDate, setBirthDate] = useState(new Date());
+  const [employeeData, setEmployeeData] = useState({});
+  const navigate = useNavigate();
   //BIKIN API UNTUK GET EMPLOYEE DATA BUAT MASUKIN KE VALUE
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/employee/${accessToken}`)
+      .then((response) => {
+        setEmployeeData(response.data.data);
+        console.log(response.data.data);
+      });
+  }, []);
   const formattedDate = (data) => {
     return `${data.getMonth() + 1}/${data.getDate()}/${data.getFullYear()}`;
   };
@@ -24,12 +34,13 @@ const EmployeeVerificationPage = () => {
   const handleSubmit = (value) => {
     let data = {
       ...value,
-      birth_date: formattedDate(birthDate),
+      birth_date: employeeData.birth_date,
     };
     axios
       .patch(`http://localhost:8000/api/verification/${accessToken}`, data)
       .then((response) => {
         console.log(response);
+        navigate("/");
       })
       .catch((error) => {
         console.log(error, "ini error");
@@ -39,9 +50,9 @@ const EmployeeVerificationPage = () => {
     <div className=" flex justify-center mt-8 bg-slate-100">
       <Formik
         initialValues={{
-          first_name: "",
-          last_name: "",
-          birth_date: "",
+          first_name: employeeData.first_name,
+          last_name: employeeData.last_name,
+          birth_date: employeeData.birth_date,
           password: "",
         }}
         onSubmit={handleSubmit}
@@ -57,11 +68,16 @@ const EmployeeVerificationPage = () => {
               </div>
               <TextInput
                 id="first_name"
-                placeholder="Jake"
+                placeholder="first_name"
                 required
                 type="text"
-                onChange={props.handleChange}
-                value={props.values.first_name}
+                onChange={(event) =>
+                  setEmployeeData({
+                    ...employeeData,
+                    first_name: event.target.value,
+                  })
+                }
+                value={employeeData.first_name}
               />
             </div>
             <div>
@@ -70,11 +86,16 @@ const EmployeeVerificationPage = () => {
               </div>
               <TextInput
                 id="last_name"
-                placeholder="Sulley"
+                placeholder="last_name"
                 required
                 type="text"
-                onChange={props.handleChange}
-                value={props.values.last_name}
+                onChange={(event) =>
+                  setEmployeeData({
+                    ...employeeData,
+                    last_name: event.target.value,
+                  })
+                }
+                value={employeeData.last_name}
               />
             </div>
             <div>
@@ -86,20 +107,13 @@ const EmployeeVerificationPage = () => {
                 id="birth_date"
                 required
                 selected={birthDate}
-                onChange={(date) => handleChange(date, "birth")}
-                value={birthDate}
-              />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Email" />
-              </div>
-              <TextInput
-                id="email"
-                placeholder="name@flowbite.com"
-                required
-                type="email"
-                value={props.values.email}
+                onChange={(event) =>
+                  setEmployeeData({
+                    ...employeeData,
+                    birth_date: event.target.value,
+                  })
+                }
+                value={employeeData.birth_date}
               />
             </div>
             <div>
@@ -109,7 +123,8 @@ const EmployeeVerificationPage = () => {
               <TextInput
                 id="password"
                 required
-                placeholder={rupiah(6000000)}
+                type="password"
+                placeholder="password"
                 onChange={props.handleChange}
                 value={props.values.password}
               />
