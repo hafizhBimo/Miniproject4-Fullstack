@@ -18,6 +18,7 @@ app.use(express.json());
 app.use("/api/auth", routes.auth);
 app.use("/api", routes.employee);
 app.use("/api", routes.attendance);
+app.use("/api", routes.payroll)
 
 // ===========================
 
