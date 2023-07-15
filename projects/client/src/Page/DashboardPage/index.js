@@ -16,13 +16,14 @@ const DashboardPage = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setRoleId(response.data.data.role_id);
-        setUser(response.data.data.email);
+        setRoleId(response.data.data.user.role_id);
+        setUser(response.data.data.user.Employee_detail.first_name);
       });
   }, []);
 
   useEffect(() => {
     setMenu(<WelcomeMenuComponent user={user} />);
+    console.log(user, roleId, "ini data");
   }, [user]);
 
   return (
