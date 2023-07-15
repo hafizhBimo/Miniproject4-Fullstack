@@ -13,6 +13,16 @@ module.exports = {
         where: {
           email: email,
         },
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "access_token"],
+        },
+
+        include: [
+          {
+            model: db.Employee_details,
+            attributes: ["first_name", "last_name"],
+          },
+        ],
       });
       if (!user) {
         return res.status(404).send({
@@ -33,7 +43,7 @@ module.exports = {
 
       res.status(200).send({
         message: "login success",
-        data: user.email,
+        data: user,
         loginToken: token,
       });
     } catch (error) {
@@ -50,6 +60,15 @@ module.exports = {
     try {
       const user = await db.User.findOne({
         where: { id: userId },
+        attributes: {
+          exclude: ["password", "access_token", "createdAt", "updatedAt"],
+        },
+        include: [
+          {
+            model: db.Employee_details,
+            attributes: ["first_name", "last_name"],
+          },
+        ],
       });
       if (!user) {
         return res.status(400).send({
@@ -59,8 +78,7 @@ module.exports = {
       res.status(200).send({
         message: "login data successfully collected",
         data: {
-          email: user.email,
-          role_id: userRole,
+          user,
         },
       });
     } catch (error) {
@@ -70,5 +88,4 @@ module.exports = {
       });
     }
   },
-  
 };

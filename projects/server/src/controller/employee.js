@@ -103,6 +103,13 @@ module.exports = {
       //check employee_details
       const employeeData = await db.Employee_details.findOne({
         where: { user_id: userData.id },
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "user_id", "salary_id"],
+        },
+        include: {
+          model: db.User,
+          atttributes: ["email"],
+        },
       });
 
       //hash password
