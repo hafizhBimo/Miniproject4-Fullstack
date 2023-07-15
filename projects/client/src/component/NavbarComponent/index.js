@@ -4,8 +4,11 @@ import EmployeeRegistrationPage from "../../Page/EmployeeRegistrationPage";
 import WelcomeMenuComponent from "../WelcomeMenuComponent";
 import "./style.css";
 import AttendanceComponent from "../AttendanceComponent";
+import AttendanceReportComponent from "../AttendanceReportComponent";
+import { useNavigate } from "react-router-dom";
 
 export default function NavbarComponent({ roleId, setMenu, user }) {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [activeNav, setActiveNav] = useState({
     home: false,
@@ -46,7 +49,15 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
             registration form
           </Navbar.Link>
           {token ? (
-            <Navbar.Link href="#">logout</Navbar.Link>
+            <Navbar.Link
+              className="hover"
+              onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/");
+              }}
+            >
+              logout
+            </Navbar.Link>
           ) : (
             <Navbar.Link href="#">login</Navbar.Link>
           )}
@@ -73,9 +84,26 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
           >
             attendance
           </Navbar.Link>
-          <Navbar.Link href="#">attendance report</Navbar.Link>
+          <Navbar.Link
+            className="hover"
+            active={activeNavEmp.attendanceReport}
+            onClick={() => {
+              setMenu(<AttendanceReportComponent />);
+              setActiveNavEmp({ attendanceReport: true });
+            }}
+          >
+            attendance report
+          </Navbar.Link>
           <Navbar.Link href="#">payroll report</Navbar.Link>
-          <Navbar.Link href="#">Logout</Navbar.Link>
+          <Navbar.Link
+            className="hover"
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/");
+            }}
+          >
+            Logout
+          </Navbar.Link>
         </Navbar.Collapse>
       )}
     </Navbar>

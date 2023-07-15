@@ -40,8 +40,9 @@ module.exports = {
       });
       if (checkClockIn) {
         return res.status(400).send({
-          message: "you already have tapped in for today",
+          message: "you've already tapped in for today",
           data: checkClockIn.clock_in,
+          code: 3,
         });
       }
 
@@ -58,6 +59,7 @@ module.exports = {
       res.status(200).send({
         message: "clock in success",
         data: tapIn,
+        code: 1,
       });
     } catch (error) {
       return res.status(400).send({
@@ -67,6 +69,7 @@ module.exports = {
     }
   },
   async clockOut(req, res) {
+    const userId = req.user.id;
     try {
       //get user data
       const userData = await db.User.findOne({
@@ -78,9 +81,9 @@ module.exports = {
           message: "invalid token",
         });
       }
-      //clock out
-      const date = new Date();
 
+      //format date
+      const date = new Date();
       const timeNow = date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -94,22 +97,48 @@ module.exports = {
         })
         .replace(/\//g, "-");
 
-      const tapOut = await db.Attendance.create({
-        user_id: userId,
-        clock_in: timeNow,
-        date: dates,
-        isValid: false,
-        createdAt: date,
-        updatedAt: date,
-      });
-      console.log(dates, typeof dates, "ini datenow");
-      res.status(200).send({
-        message: "clock in success",
-        data: tapIn,
-      });
       const dates = new Date(dateNow);
+
+      //check clock in
+      const checkClockIn = await db.Attendance.findOne({
+        where: {
+          [db.Sequelize.Op.and]: [{ user_id: userId }, { date: dates }],
+        },
+      });
+      if (!checkClockIn) {
+        return res.status(400).send({
+          message: "you haven't tapped in for today",
+          data: checkClockIn.clock_in,
+          code: 4,
+        });
+      }
+
+      //check clock out
+      if (checkClockIn.isValid) {
+        return res.status(400).send({
+          message: "you've already tapped out for today",
+          data: checkClockIn.clock_out,
+          code: 5,
+        });
+      }
+
+      //clock out
+      checkClockIn.clock_out = timeNow;
+      checkClockIn.isValid = true;
+
+      //save clock out
+      await checkClockIn.save();
+
+      res.status(200).send({
+        message: "clock out success",
+        data: checkClockIn.clock_out,
+        code: 2,
+      });
     } catch (error) {
-      return;
+      return res.status(500).send({
+        message: "fatal error",
+        error: error.message,
+      });
     }
   },
   async employeeAttendanceReport(req, res) {
