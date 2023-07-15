@@ -154,7 +154,7 @@ module.exports = {
             attributes: ["email"],
             include: {
               model: db.Employee_details,
-              attributes: ["first_name", "last_name"],
+              attributes: ["first_name", "last_name","join_date"],
             },
           },
         ],
