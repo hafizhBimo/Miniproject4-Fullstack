@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-import LiveClockComponent from "../LiveClockComponent";
 import { useState, useEffect } from "react";
 import { Button, Alert } from "flowbite-react";
 import axios from "axios";
@@ -73,6 +71,7 @@ const AttendanceComponent = () => {
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
+          paddingLeft:"55px"
         }}
       >
         {showAlert && (

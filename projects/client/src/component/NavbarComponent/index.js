@@ -6,6 +6,7 @@ import "./style.css";
 import AttendanceComponent from "../AttendanceComponent";
 import AttendanceReportComponent from "../AttendanceReportComponent";
 import { useNavigate } from "react-router-dom";
+import PayrollReportComponent from "../PayrollReportComponent";
 
 export default function NavbarComponent({ roleId, setMenu, user }) {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
     payrollReport: false,
   });
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded style={{minWidth:"448px"}}>
       <Navbar.Brand href="https://flowbite-react.com"></Navbar.Brand>
       <div className="flex md:order-2">
         <Navbar.Toggle />
@@ -94,7 +95,16 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
           >
             attendance report
           </Navbar.Link>
-          <Navbar.Link href="#">payroll report</Navbar.Link>
+          <Navbar.Link
+            className="hover"
+            active={activeNavEmp.payrollReport}
+            onClick={() => {
+              setMenu(<PayrollReportComponent />);
+              setActiveNavEmp({ payrollReport: true });
+            }}
+          >
+            payroll report
+          </Navbar.Link>
           <Navbar.Link
             className="hover"
             onClick={() => {

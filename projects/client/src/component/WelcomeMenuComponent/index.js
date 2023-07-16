@@ -12,6 +12,7 @@ const WelcomeMenuComponent = ({ user }) => {
           height: "94vh",
           display: "flex",
           justifyContent: "center",
+          paddingLeft:"52px"
         }}
       >
         welcome,{user}

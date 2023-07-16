@@ -111,21 +111,53 @@ module.exports = {
   },
   async getPayrollData(req, res) {
     const userId = req.user.id;
+    const pagination = {
+      page: Number(req.query.page) || 1,
+      perPage: Number(req.query.perPage) || 6,
+      date: req.query.date || undefined,
+    };
     try {
-      const payrollData = await db.Employee_details.findAll({
-        where: { user_id: userId },
-        atttributes: { exclude: ["createdAt", "updatedAt", "user_id"] },
+      let where = { user_id: userId };
+
+      if (pagination.date) {
+        where.date = pagination.date;
+      }
+      const { count, rows } = await db.Payroll.findAndCountAll({
+        where,
+        atttributes: { exclude: ["createdAt", "updatedAt"] },
         include: [
           {
-            model: db.Salary,
-            atttributes: ["basic_salary"],
+            model: db.User,
+            atttributes: ["email"],
+            include: [
+              {
+                model: db.Employee_details,
+                atttributes: ["first_name", "last_name"],
+              },
+            ],
           },
         ],
+        limit: pagination.perPage,
+        offset: (pagination.page - 1) * pagination.perPage,
       });
+
+      if (pagination.search && count === 0) {
+        return res.status(404).send({
+          message: "No products found matching the search query.",
+        });
+      }
+
+      const totalPages = Math.ceil(count / pagination.perPage);
 
       res.status(200).send({
         message: "payroll data successfully retreived",
-        data: payrollData,
+        pagination: {
+          page: pagination.page,
+          perPage: pagination.perPage,
+          totalPages: totalPages,
+          totalData: count,
+        },
+        data: rows,
       });
     } catch (error) {
       return res.status(500).send({
