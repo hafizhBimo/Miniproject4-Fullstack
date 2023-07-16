@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import NavbarComponent from "../../component/NavbarComponent";
-import SidebarComponent from "../../component/SidebarComponent";
 import WelcomeMenuComponent from "../../component/WelcomeMenuComponent";
 import AuthComponent from "../../component/AuthComponent";
 
