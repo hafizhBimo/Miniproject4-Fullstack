@@ -42,7 +42,8 @@ const EmployeeVerificationPage = () => {
           navigate("/");
         })
         .catch((error) => {
-          return;
+          console.log(error);
+          alert(error);
         });
     }
   };

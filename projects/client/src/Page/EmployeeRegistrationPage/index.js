@@ -16,7 +16,7 @@ const EmployeeRegistrationPage = () => {
   const token = localStorage.getItem("token");
 
   const formattedDate = (data) => {
-    return `${data.getMonth() + 1}/${data.getDate()}/${data.getFullYear()}`;
+    return `${data.getMonth() + 1}/${data.getDate() + 1}/${data.getFullYear()}`;
   };
   const handleChange = (value, type) => {
     if (type == "birth") {
@@ -39,7 +39,7 @@ const EmployeeRegistrationPage = () => {
         })
         .then((response) => {
           console.log(response);
-          alert(response.message);
+          alert(response.data.message);
         })
         .catch((error) => {
           console.log(error);

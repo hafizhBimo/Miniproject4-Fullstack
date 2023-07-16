@@ -12,6 +12,8 @@ const validate = (validations) => {
       return next();
     }
 
+    console.log(errors);
+    alert(errors.response.data.errors[0].msg);
     res.status(400).json({ errors: errors.array() });
   };
 };
