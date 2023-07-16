@@ -50,7 +50,7 @@ const AttendanceComponent = () => {
       .then((response) => {
         setAlert(response.data.data);
         setShowAlert(true);
-        console.log(response.data.data)
+        console.log(response.data.data);
       })
       .catch((error) => {
         setAlert(error.response.data);

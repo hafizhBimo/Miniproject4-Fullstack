@@ -23,7 +23,10 @@ const AttendanceReportComponent = () => {
       });
   }, [currentPage]);
   return (
-    <div className="flex justify-center items-center bg-slate-100" style={{paddingLeft:"52px"}}>
+    <div
+      className="flex justify-center items-center bg-slate-100"
+      style={{ paddingLeft: "52px" }}
+    >
       <div
         style={{
           width: "1000px",
@@ -33,7 +36,7 @@ const AttendanceReportComponent = () => {
           minHeight: "94vh",
           display: "flex",
           flexDirection: "column",
-          paddingLeft:"24px"
+          paddingLeft: "24px",
         }}
       >
         <Card horizontal className="my-10">
@@ -68,7 +71,6 @@ const AttendanceReportComponent = () => {
                 <Table.Row
                   key={key}
                   className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  
                 >
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                     {key + 1}

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "flowbite-react";
 import Clock from "react-live-clock";
+import AuthComponent from "../AuthComponent";
 
 const GeneratePayrollComponent = () => {
   const token = localStorage.getItem("token");

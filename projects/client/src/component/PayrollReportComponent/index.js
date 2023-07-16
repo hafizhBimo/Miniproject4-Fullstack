@@ -5,6 +5,7 @@ import "boxicons";
 import avatar from "../../asset/pngegg.png";
 import rupiah from "../../utils/rupiah";
 
+
 const PayrollReportComponent = () => {
   const token = localStorage.getItem("token");
   const [payrollData, setPayrollData] = useState([]);

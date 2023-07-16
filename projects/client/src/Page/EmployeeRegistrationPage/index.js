@@ -6,8 +6,8 @@ import { useState } from "react";
 import axios from "axios";
 
 import "react-datepicker/dist/react-datepicker.css";
-import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
+import AuthComponent from "../../component/AuthComponent";
 
 const EmployeeRegistrationPage = () => {
   const [birthDate, setBirthDate] = useState(new Date());
@@ -152,4 +152,4 @@ const EmployeeRegistrationPage = () => {
   );
 };
 
-export default EmployeeRegistrationPage;
+export default AuthComponent(EmployeeRegistrationPage);

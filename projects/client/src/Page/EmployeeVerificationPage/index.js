@@ -6,8 +6,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
-import ConfirmationModalComponent from "../../component/ConfirmationModalComponent";
 import rupiah from "../../utils/rupiah";
+import AuthComponent from "../../component/AuthComponent";
 
 const EmployeeVerificationPage = () => {
   const { accessToken } = useParams();
@@ -137,4 +137,4 @@ const EmployeeVerificationPage = () => {
   );
 };
 
-export default EmployeeVerificationPage;
+export default AuthComponent(EmployeeVerificationPage);

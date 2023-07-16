@@ -10,15 +10,11 @@ import {
 
 import "./App.css";
 import LoginPage from "./Page/LoginPage";
-import EmployeeRegistrationPage from "./Page/EmployeeRegistrationPage";
+
 import EmployeeVerificationPage from "./Page/EmployeeVerificationPage";
 import DashboardPage from "./Page/DashboardPage";
 
 const router = createBrowserRouter([
-  {
-    path: "/registrationform",
-    element: <EmployeeRegistrationPage />,
-  },
   {
     path: "/",
     element: <LoginPage />,

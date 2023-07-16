@@ -4,6 +4,7 @@ import axios from "axios";
 import NavbarComponent from "../../component/NavbarComponent";
 import SidebarComponent from "../../component/SidebarComponent";
 import WelcomeMenuComponent from "../../component/WelcomeMenuComponent";
+import AuthComponent from "../../component/AuthComponent";
 
 const DashboardPage = () => {
   const token = localStorage.getItem("token");
@@ -34,4 +35,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default AuthComponent(DashboardPage);
