@@ -183,5 +183,43 @@ module.exports = {
       });
     }
   },
-  
+  async getAllEmployeeData(req, res) {
+    const pagination = {
+      page: Number(req.query.page) || 1,
+      perPage: Number(req.query.perPage) || 5,
+    };
+    try {
+      let where = {};
+      //get all employee
+      const { count, rows } = await db.Employee_details.findAndCountAll({
+        where,
+        limit: pagination.perPage,
+        offset: (pagination.page - 1) * pagination.perPage,
+      });
+
+      if (pagination.search && count === 0) {
+        return res.status(404).send({
+          message: "No products found matching the search query.",
+        });
+      }
+
+      const totalPages = Math.ceil(count / pagination.perPage);
+
+      res.status(200).send({
+        message: "employee data successfully retreived",
+        pagination: {
+          page: pagination.page,
+          perPage: pagination.perPage,
+          totalPages: totalPages,
+          totalData: count,
+        },
+        data: rows,
+      });
+    } catch (error) {
+      return res.status(500).send({
+        message: "fatal error",
+        error: error.message,
+      });
+    }
+  },
 };

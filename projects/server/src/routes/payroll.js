@@ -2,8 +2,8 @@ const { payroll: payrollController } = require("../controller");
 const middleware = require("../middldeware/auth");
 const router = require("express").Router();
 
-router.get(
-  "/payroll/:id/:year/:month",
+router.post(
+  "/generatepayroll",
   middleware.verifyToken,
   middleware.checkRole,
   payrollController.payrollCount

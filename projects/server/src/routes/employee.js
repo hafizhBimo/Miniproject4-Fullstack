@@ -15,5 +15,10 @@ router.patch(
 );
 
 router.get("/employee/:accessToken", employeeController.employeeData);
-
+router.get(
+  "/allemployee",
+  middleware.verifyToken,
+  middleware.checkRole,
+  employeeController.getAllEmployeeData
+);
 module.exports = router;

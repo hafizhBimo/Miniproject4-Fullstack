@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Alert } from "flowbite-react";
 import axios from "axios";
+import Clock from "react-live-clock";
 
 const AttendanceComponent = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -49,6 +50,7 @@ const AttendanceComponent = () => {
       .then((response) => {
         setAlert(response.data.data);
         setShowAlert(true);
+        console.log(response.data.data)
       })
       .catch((error) => {
         setAlert(error.response.data);
@@ -71,19 +73,32 @@ const AttendanceComponent = () => {
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
-          paddingLeft:"55px"
+          paddingLeft: "55px",
         }}
       >
-        {showAlert && (
-          <Alert color={condition[alert.code]}>
-            <span>
-              <p>
-                <span className="font-medium">Info alert!</span>
-                {alert.message}
-              </p>
-            </span>
-          </Alert>
-        )}
+        <div>
+          {showAlert && (
+            <Alert color={condition[alert.code]}>
+              <span>
+                <p>
+                  <span className="font-medium">Info alert!</span>
+                  {alert.message}
+                </p>
+              </span>
+            </Alert>
+          )}
+        </div>
+        <Clock
+          format={"HH:mm:ss"}
+          ticking={true}
+          style={{ fontSize: "70px" }}
+        />
+        <Clock
+          date={new Date()}
+          format={"dddd, MMMM Do YYYY"}
+          ticking={true}
+          style={{ fontSize: "20px" }}
+        />
         <div className="flex gap-4 p-10">
           <Button onClick={() => handleClickIn()}>clock in</Button>
           <Button onClick={() => handleClickOut()}>clock out</Button>

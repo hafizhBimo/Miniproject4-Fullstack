@@ -36,7 +36,7 @@ module.exports = {
       return next();
     } else {
       return res.status(400).send({
-        message: "Unothorized!",
+        message: "Unauthorized!",
       });
     }
   },

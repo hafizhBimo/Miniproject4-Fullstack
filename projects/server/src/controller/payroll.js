@@ -2,9 +2,9 @@ const db = require("../models");
 
 module.exports = {
   async payrollCount(req, res) {
-    const userId = req.params.id;
-    const year = req.params.year;
-    const month = req.params.month;
+    const userId = req.body.id;
+    const year = req.body.year;
+    const month = req.body.month;
     try {
       //format date
       const date = new Date();

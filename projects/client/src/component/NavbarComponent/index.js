@@ -7,6 +7,7 @@ import AttendanceComponent from "../AttendanceComponent";
 import AttendanceReportComponent from "../AttendanceReportComponent";
 import { useNavigate } from "react-router-dom";
 import PayrollReportComponent from "../PayrollReportComponent";
+import GeneratePayrollComponent from "../GeneratePayrollComponent";
 
 export default function NavbarComponent({ roleId, setMenu, user }) {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
   const [activeNav, setActiveNav] = useState({
     home: false,
     registration: false,
+    generatePayroll: false,
   });
   const [activeNavEmp, setActiveNavEmp] = useState({
     home: false,
@@ -22,7 +24,7 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
     payrollReport: false,
   });
   return (
-    <Navbar fluid rounded style={{minWidth:"448px"}}>
+    <Navbar fluid rounded style={{ minWidth: "448px" }}>
       <Navbar.Brand href="https://flowbite-react.com"></Navbar.Brand>
       <div className="flex md:order-2">
         <Navbar.Toggle />
@@ -48,6 +50,16 @@ export default function NavbarComponent({ roleId, setMenu, user }) {
             }}
           >
             registration form
+          </Navbar.Link>
+          <Navbar.Link
+            className="hover"
+            active={activeNav.generatePayroll}
+            onClick={() => {
+              setMenu(<GeneratePayrollComponent />);
+              setActiveNav({ generatePayroll: true });
+            }}
+          >
+            Generate Payroll
           </Navbar.Link>
           {token ? (
             <Navbar.Link
