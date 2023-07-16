@@ -29,22 +29,24 @@ const GeneratePayrollComponent = () => {
     const date = new Date();
     const month = date.getMonth();
     const year = date.getFullYear();
-    await axios
-      .post(
-        "http://localhost:8000/api/generatepayroll",
-        {
-          id: id,
-          month: month,
-          year: year,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((response) => {
-        setResponse(response.data);
-        console.log(id, month, year);
-      });
+    if (window.confirm("are you sure you want proceed?")) {
+      await axios
+        .post(
+          "http://localhost:8000/api/generatepayroll",
+          {
+            id: id,
+            month: month,
+            year: year,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((response) => {
+          setResponse(response.data);
+          console.log(id, month, year);
+        });
+    }
   };
   return (
     <div

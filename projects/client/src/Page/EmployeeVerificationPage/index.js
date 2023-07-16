@@ -32,19 +32,21 @@ const EmployeeVerificationPage = () => {
     }
   };
   const handleSubmit = (value) => {
-    let data = {
-      ...value,
-      birth_date: employeeData.birth_date,
-    };
-    axios
-      .patch(`http://localhost:8000/api/verification/${accessToken}`, data)
-      .then((response) => {
-        console.log(response);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error, "ini error");
-      });
+    if (window.confirm("are you sure you want to proceed?")) {
+      let data = {
+        ...value,
+        birth_date: employeeData.birth_date,
+      };
+      axios
+        .patch(`http://localhost:8000/api/verification/${accessToken}`, data)
+        .then((response) => {
+          console.log(response);
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error, "ini error");
+        });
+    }
   };
   return (
     <div className=" flex justify-center mt-8 bg-slate-100">

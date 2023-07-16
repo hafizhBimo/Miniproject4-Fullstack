@@ -26,28 +26,30 @@ const EmployeeRegistrationPage = () => {
     }
   };
   const handleSubmit = (value) => {
-    let data = {
-      ...value,
-      birth_date: formattedDate(birthDate),
-      join_date: formattedDate(joinDate),
-    };
+    if (window.confirm("are you sure you want to proceed?")) {
+      let data = {
+        ...value,
+        birth_date: formattedDate(birthDate),
+        join_date: formattedDate(joinDate),
+      };
 
-    console.log(value, "ini value");
-    axios
-      .post("http://localhost:8000/api/registration", data, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error, "ini error");
-        console.log(
-          formattedDate(joinDate),
-          formattedDate(birthDate),
-          "ini tanggal"
-        );
-      });
+      console.log(value, "ini value");
+      axios
+        .post("http://localhost:8000/api/registration", data, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error, "ini error");
+          console.log(
+            formattedDate(joinDate),
+            formattedDate(birthDate),
+            "ini tanggal"
+          );
+        });
+    }
   };
   return (
     <div className=" flex justify-center mt-8 bg-slate-100">
