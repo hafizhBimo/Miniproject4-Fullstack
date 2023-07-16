@@ -39,9 +39,11 @@ const EmployeeRegistrationPage = () => {
         })
         .then((response) => {
           console.log(response);
+          alert(response.message);
         })
         .catch((error) => {
-          return;
+          console.log(error);
+          alert(error.response.data.message);
         });
     }
   };
