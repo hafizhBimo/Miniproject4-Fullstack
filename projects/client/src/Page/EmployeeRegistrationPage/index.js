@@ -33,7 +33,6 @@ const EmployeeRegistrationPage = () => {
         join_date: formattedDate(joinDate),
       };
 
-      console.log(value, "ini value");
       axios
         .post("http://localhost:8000/api/registration", data, {
           headers: { Authorization: `Bearer ${token}` },
@@ -42,12 +41,7 @@ const EmployeeRegistrationPage = () => {
           console.log(response);
         })
         .catch((error) => {
-          console.log(error, "ini error");
-          console.log(
-            formattedDate(joinDate),
-            formattedDate(birthDate),
-            "ini tanggal"
-          );
+          return;
         });
     }
   };

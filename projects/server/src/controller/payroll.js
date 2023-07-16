@@ -83,7 +83,15 @@ module.exports = {
           halfCount += 1;
         }
       });
-
+      console.log(
+        userId,
+        month,
+        year,
+        fullCount,
+        halfCount,
+        dailySalary,
+        "cek"
+      );
       const totalDeduction = halfCount * (dailySalary / 2);
       const fullSalary = fullCount * dailySalary + totalDeduction;
 

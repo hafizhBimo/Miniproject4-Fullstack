@@ -19,7 +19,7 @@ const AttendanceReportComponent = () => {
       .then((response) => {
         setAttendanceData(response.data.data);
         setTotalPage(response.data.pagination.totalPages);
-        console.log(response.data);
+       
       });
   }, [currentPage]);
   return (

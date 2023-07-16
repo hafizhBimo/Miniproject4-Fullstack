@@ -20,7 +20,6 @@ const EmployeeVerificationPage = () => {
       .get(`http://localhost:8000/api/employee/${accessToken}`)
       .then((response) => {
         setEmployeeData(response.data.data);
-        console.log(response.data.data);
       });
   }, []);
   const formattedDate = (data) => {
@@ -40,11 +39,10 @@ const EmployeeVerificationPage = () => {
       axios
         .patch(`http://localhost:8000/api/verification/${accessToken}`, data)
         .then((response) => {
-          console.log(response);
           navigate("/");
         })
         .catch((error) => {
-          console.log(error, "ini error");
+          return;
         });
     }
   };

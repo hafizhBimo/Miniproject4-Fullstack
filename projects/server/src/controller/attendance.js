@@ -180,7 +180,7 @@ module.exports = {
       }
 
       const totalPages = Math.ceil(count / pagination.perPage);
-      console.log(count, totalPages);
+
 
       res.status(200).send({
         message: "data successfully retrieved",

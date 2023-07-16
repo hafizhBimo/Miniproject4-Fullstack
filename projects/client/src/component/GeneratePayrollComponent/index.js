@@ -21,7 +21,6 @@ const GeneratePayrollComponent = () => {
       .then((response) => {
         setEmployeeData(response.data.data);
         setTotalPage(response.data.pagination.totalPages);
-        console.log(response.data);
       });
   }, [currentPage]);
 
@@ -35,7 +34,7 @@ const GeneratePayrollComponent = () => {
           "http://localhost:8000/api/generatepayroll",
           {
             id: id,
-            month: month,
+            month: month + 1,
             year: year,
           },
           {
@@ -44,7 +43,6 @@ const GeneratePayrollComponent = () => {
         )
         .then((response) => {
           setResponse(response.data);
-          console.log(id, month, year);
         });
     }
   };

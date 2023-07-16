@@ -24,7 +24,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     setMenu(<WelcomeMenuComponent user={user} />);
-    console.log(user, roleId, "ini data");
+   
   }, [user]);
 
   return (
