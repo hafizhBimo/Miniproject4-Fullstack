@@ -13,7 +13,7 @@ router.post(
 
 router.patch(
   "/verification/:accessToken",
-  validateMiddleware.validateVerificationForm,
+
   employeeController.employeeVerification
 );
 

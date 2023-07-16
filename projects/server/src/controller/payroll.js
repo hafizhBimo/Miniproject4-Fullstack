@@ -106,6 +106,7 @@ module.exports = {
       });
 
       res.status(200).send({
+        message: "generate payroll success",
         employeeDetail: salaryDetail,
         totalSalary: fullSalary,
         totalDeduction: totalDeduction,

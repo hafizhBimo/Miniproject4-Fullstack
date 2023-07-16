@@ -43,6 +43,11 @@ const GeneratePayrollComponent = () => {
         )
         .then((response) => {
           setResponse(response.data);
+          console.log(response);
+          alert(response.data.message);
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
         });
     }
   };

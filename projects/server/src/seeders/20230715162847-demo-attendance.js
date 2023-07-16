@@ -8,6 +8,7 @@ module.exports = {
       minute: "2-digit",
       second: "2-digit",
     });
+
     /**
      * Add seed commands here.
      *
@@ -17,144 +18,21 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("Attendances", [
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: null,
-        date: "2023-07-01",
-        isValid: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-02",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-03",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-04",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: null,
-        date: "2023-07-06",
-        isValid: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-07",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-08",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-09",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: null,
-        date: "2023-07-10",
-        isValid: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-11",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
 
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-13",
-        isValid: true,
+    var attendance = [];
+    for (let i = 1; i < 22; i++) {
+      attendance.push({
+        user_id: 29,
+        clock_in: "07:00:00",
+        clock_out: null,
+        date: `2023-01-${i}`,
+        isValid: false,
         createdAt: new Date(),
         updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-14",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-16",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-17",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        user_id: 23,
-        clock_in: timeNow,
-        clock_out: timeNow,
-        date: "2023-07-18",
-        isValid: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
+      });
+
+    }
+    await queryInterface.bulkInsert("Attendances", attendance);
   },
 
   async down(queryInterface, Sequelize) {
